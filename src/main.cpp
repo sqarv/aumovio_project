@@ -2,22 +2,25 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7789.h>
 
-#define TFT_CS   10
-#define TFT_DC    9
-#define TFT_RST   8
+#define TFT_CS   10 // chip select pin
+#define TFT_DC    9 // data/command pin
+#define TFT_RST   8 // reset pin
 
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 
 void setup() {
-  tft.init(240, 320);          // Initialize ST7789 240x320 hardware
-  tft.setRotation(1);          // 1 = Landscape (320x240)
-  tft.fillScreen(ST77XX_MAGENTA); // Clears the entire display memory
+  tft.init(240, 320);
+  tft.setRotation(1);
+  tft.invertDisplay(0);
+  tft.fillScreen(ST77XX_BLACK);
 
   tft.fillRect(10, 10, 100, 60, ST77XX_BLUE);
   tft.setCursor(20, 120);
   tft.setTextColor(ST77XX_GREEN);
   tft.setTextSize(2);
-  tft.print("System Ready 320x240");
+  tft.print("Salut");
 }
 
-void loop() {}
+void loop(){
+  
+}
