@@ -1,51 +1,31 @@
-#ifndef CONFIG_H
-#define CONFIG_H
-
+#pragma once
 #include <Arduino.h>
 
-// Pins Configuration
-#define TFT_CS     10
-#define TFT_RESET   9    
-#define TFT_DC      8
-#define T_CS        7
-#define BUZZER      6
-#define BRIGHTNESS  5
+// ---------- Pini display (SPI) ----------
+#define TFT_CS 10
+#define TFT_DC   9
+#define TFT_RST  8
+#define T_CS 7
 
-#define RELAY_1 A1
-#define RELAY_2 A2
-#define RELAY_3 A3
-#define RELAY_4 A4
+// ---------- Pini relee (patru canale) ----------
+// Modulul de relee e activ pe LOW (comun la modulele cu optocuplor):
+//   TON  -> pin LOW  -> releu ON
+//   TOFF -> pin HIGH -> releu OFF
+static const uint8_t RELAY_PIN[4] = {2, 3, 4, 5};
 
-// Display Resolution
-#define SCREEN_W 320
-#define SCREEN_H 240
+// ---------- Pin trigger extern (stand-in camera climatica) ----------
+// Declarat, dar neintegrat inca in FSM (ramane pt o etapa urmatoare).
+#define TRIGGER_PIN 6
 
-// Touch Calibration Thresholds (Calibrate these for your hardware)
-#define TS_MINX 200
-#define TS_MINY 200
-#define TS_MAXX 3800
-#define TS_MAXY 3800
+// ---------- Ecran ----------
+#define SCREEN_W 240
+#define SCREEN_H 320
 
-// Color Palette (RGB565 format)
-#define COLOR_BG        0x10A2 // Deep Charcoal
-#define COLOR_HEADER    0x0000 // Black
-#define COLOR_CARD      0x29A6 // Card Fill
-#define COLOR_BLUE      0x03FF // Main Action Blue
-#define COLOR_TEXT      0xFFFF // White Text
-#define COLOR_MUTED     0x8410 // Muted Text/Gray
-#define COLOR_ORANGE    0xFD20 // Active Indicator
+// ---------- Limite editare ----------
+#define MAX_H 99
+#define MAX_M 59
+#define MAX_S 59
+#define MAX_CYCLES 999   // Cicluri = 0 => repetare infinita
 
-// Data Structures
-struct Preset {
-  uint8_t onH, onM, onS;
-  uint8_t offH, offM, offS;
-  uint8_t cycles;
-  bool active;
-};
-
-enum ScreenState {
-  STATE_MAIN,
-  STATE_SETTINGS
-};
-
-#endif
+// ---------- Stare globala sistem (comenzi master) ----------
+enum SystemState : uint8_t { SYS_IDLE = 0, SYS_RUNNING = 1, SYS_FROZEN = 2 };
