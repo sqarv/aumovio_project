@@ -30,12 +30,12 @@ bool readTap(int &x, int &y) {
   Serial.println(text); // touch debbuging
   
   // map touch location to screen size
-  x = map(p.x, 0, 240, 281, 3700);
-  y = map(p.y, 0, 320, 321, 3720);
+  x = map(p.x, 385, 3752, 0, SCREEN_W);
+  y = map(p.y, 280, 3700, 0, SCREEN_H);
   
   // limit touch coordinates to screen boundaries
-  x = constrain(x,0,320);
-  y = constrain(y,0,240);
+  x = constrain(x,0,240);
+  y = constrain(y,0,320);
   
   return true;
 }
@@ -53,14 +53,19 @@ void setup() {
   // init display
   tft.init(SCREEN_W,SCREEN_H);
   tft.invertDisplay(0); // non-inverted colors
-  tft.setRotation(1); // landscape
+  tft.setRotation(0); // portrait
   
   // init touch
   ts.begin();
-  ts.setRotation(0);
-
+  ts.setRotation(3);
+  
+  // other
   uiInit(&tft, presets);
   uiDrawMain(systemState);
+  
+  //set buzzer
+  pinMode(BUZZER,OUTPUT);
+  digitalWrite(BUZZER,LOW);
 }
 
 // LOOP
@@ -73,8 +78,9 @@ void loop() {
 
   int x, y;
   if (readTap(x, y)) {
+    tone(BUZZER,BUZZER_FREQ,BUZZER_T);
     uiHandleTap(x, y, systemState);
-    delay(180); // debounce simplu
+    delay(50);
   }
 
   uiTick(systemState);
