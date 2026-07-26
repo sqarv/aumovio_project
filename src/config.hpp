@@ -2,10 +2,10 @@
 #include <Arduino.h>
 
 // ---------- Pini display (SPI) ----------
-#define TFT_CS 10
-#define TFT_DC   9
-#define TFT_RST  8
-#define T_CS 7
+#define TFT_CS     10
+#define TFT_RST     9    
+#define TFT_DC      8
+#define T_CS        7
 
 // ---------- Pini relee (patru canale) ----------
 // Modulul de relee e activ pe LOW (comun la modulele cu optocuplor):

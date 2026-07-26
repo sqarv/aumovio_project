@@ -19,7 +19,7 @@
 #include "timer_channel.hpp"
 #include "ui_manager.hpp"
 
-Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 XPT2046_Touchscreen ts(T_CS);
 
 TimerChannel channels[4] = {
@@ -49,7 +49,8 @@ void setup() {
   pinMode(TRIGGER_PIN, INPUT_PULLUP); // TODO: integrare trigger extern (etapa urmatoare)
   
   tft.init(SCREEN_W,SCREEN_H);
-  tft.setRotation(0);
+  tft.invertDisplay(0);
+  tft.setRotation(1);
   if (!ts.begin()) {
     Serial.println("FT6206 nu a pornit (relevant doar in simulare)");
   }
