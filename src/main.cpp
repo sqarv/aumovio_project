@@ -10,10 +10,10 @@
 */
 
 #include <SPI.h>
-#include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7789.h>
 #include <XPT2046_Touchscreen.h>
+#include <string.h>
 
 #include "config.hpp"
 #include "timer_channel.hpp"
@@ -34,13 +34,21 @@ SystemState systemState = SYS_IDLE;
 bool readTap(int &x, int &y) {
   if (!ts.touched()) return false;
   TS_Point p = ts.getPoint();
-  x = map(p.x, 0, 240, 240, 0);
-  y = map(p.y, 0, 320, 320, 0);
+  
+  String text = String("X: ") + String(p.x) + String(" Y: ") + String(p.y) + String(" Preassure: ") + String(p.z);
+  Serial.println(text); // touch debbuging
+  
+  x = map(p.x, 0, 240, 281, 3700);
+  y = map(p.y, 0, 320, 321, 3720);
+  
+  x = constrain(x,0,320);
+  y = constrain(y,0,240);
+  
   return true;
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   for (uint8_t i = 0; i < 4; i++) {
     pinMode(channels[i].relayPin, OUTPUT);
@@ -54,6 +62,7 @@ void setup() {
   if (!ts.begin()) {
     Serial.println("FT6206 nu a pornit (relevant doar in simulare)");
   }
+  ts.setRotation(0);
 
   uiInit(&tft, channels);
   uiDrawMain(systemState);
