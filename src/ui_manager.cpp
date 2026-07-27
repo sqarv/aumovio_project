@@ -310,7 +310,7 @@ void ui_tick(system_state state)
   draw_main_dynamic(state);
 }
 
-bool ui_handle_tap(int x, int y, system_state &state)
+void ui_handle_tap(int x, int y, system_state &state)
 {
   if (screen_state == SCR_MAIN) // check only main screen buttons
   {

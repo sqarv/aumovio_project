@@ -93,7 +93,7 @@ void loop()
   int x, y;
   if (readTap(x, y))
   {
-    bool pressed = ui_handle_tap(x, y, current_state);
+    ui_handle_tap(x, y, current_state);
     delay(50);
   }
 

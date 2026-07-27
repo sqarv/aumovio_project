@@ -40,7 +40,7 @@ enum screen : uint8_t
 
 void ui_init(Adafruit_ST7789 *tftPtr, timer_preset *presetsPtr);
 void ui_draw_main(system_state state);                 // draw MAIN screen
-bool ui_handle_tap(int x, int y, system_state &state); // tap route to the current screen
+void ui_handle_tap(int x, int y, system_state &state); // tap route to the current screen
 void ui_tick(system_state state);
 
 //--------------------------------
