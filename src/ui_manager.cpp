@@ -79,6 +79,8 @@ bool hit_rect(const rect &r, int x, int y)
   if(val){
     tone(BUZZER, BUZZER_FREQ, BUZZER_T);
   }
+  
+  return val;
 }
 
 void format_HMS(uint32_t ms, char *buf, size_t buf_len)
