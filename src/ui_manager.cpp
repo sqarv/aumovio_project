@@ -74,7 +74,11 @@ void clear_label(const ui_label &lbl) {
 
 bool hit_rect(const rect &r, int x, int y)
 {
-  return x >= r.x && x <= (r.x + r.w) && y >= r.y && y <= (r.y + r.h);
+  bool val = x >= r.x && x <= (r.x + r.w) && y >= r.y && y <= (r.y + r.h);
+  
+  if(val){
+    tone(BUZZER, BUZZER_FREQ, BUZZER_T);
+  }
 }
 
 void format_HMS(uint32_t ms, char *buf, size_t buf_len)

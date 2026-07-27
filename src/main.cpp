@@ -94,9 +94,6 @@ void loop()
   if (readTap(x, y))
   {
     bool pressed = ui_handle_tap(x, y, current_state);
-    if(pressed){
-      tone(BUZZER, BUZZER_FREQ, BUZZER_T);
-    }
     delay(50);
   }
 
