@@ -4,6 +4,7 @@
 #include <XPT2046_Touchscreen.h>
 #include <string.h>
 
+#include "theme.hpp"
 #include "config.hpp"
 #include "timer_preset.hpp"
 #include "ui_manager.hpp"
@@ -61,6 +62,7 @@ void setup()
   tft.init(SCREEN_W, SCREEN_H);
   tft.invertDisplay(0); // non-inverted colors
   tft.setRotation(0);   // portrait orientationn
+  tft.fillScreen(UI_COLOR_BG);
 
   // init touch
   ts.begin();
