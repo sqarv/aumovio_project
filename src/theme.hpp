@@ -1,20 +1,20 @@
-// --- PUMP CONTROL STYLE PALETTE (RGB565) ---
-#define UI_COLOR_BG               0x18C3 // Dark graphite
-#define UI_COLOR_FG               0xEF7D // Soft white
-#define UI_COLOR_ACCENT           0xE6A0 // Soft yellow
+#define UI_COLOR_BG               0x2104 // #131313 bg
+#define UI_COLOR_FG               0xEED6 // #ebdbb2 fg
+#define UI_COLOR_ACCENT           0xFDE5 // #fabd2f bright yellow
 
-// Main Control Buttons
-#define UI_COLOR_ACTIVE           0x7E4C // Muted mint green
-#define UI_COLOR_ACTIVE_BORDER    0x4D69 // Dark green
+#define UI_COLOR_NEUTRAL          0x18C3 // darker than background (0x2124)
+#define UI_COLOR_NEUTRAL_BORDER   0x1082 // darkest gray border
 
-#define UI_COLOR_INACTIVE         0xD34A // Soft salmon red
-#define UI_COLOR_INACTIVE_BORDER  0xA104 // Dark brick red
+#define UI_COLOR_ACTIVE           0x4B23 // #496418 darker rich green
+#define UI_COLOR_ACTIVE_BORDER    0x29C1 // #2d3f0c deep forest green border
 
-#define UI_COLOR_WARN             0xFD08 // Soft peach/orange
-#define UI_COLOR_WARN_BORDER      0xC3C4 // Brown-orange
+#define UI_COLOR_INACTIVE         0xA183 // #a02820 refined dark red
+#define UI_COLOR_INACTIVE_BORDER  0x6801 // #68120c matching deep border
 
-// Preset Cards Borders
-#define UI_COLOR_P1               0xA7DF // Soft cyan
-#define UI_COLOR_P2               0x7D9F // Steel blue
-#define UI_COLOR_P3               0xD5B7 // Lavender/Purple
-#define UI_COLOR_P4               0xE6C7 // Pale lime green
+#define UI_COLOR_WARN             0x9260 // #935300 darker warm orange
+#define UI_COLOR_WARN_BORDER      0x51A0 // #532c00 deep amber border
+
+#define UI_COLOR_P1               0x8533 // #83a598 bright blue
+#define UI_COLOR_P2               0x8E0F // #8ec07c bright aqua
+#define UI_COLOR_P3               0x8B91 // #8f6f8e muted/desaturated purple
+#define UI_COLOR_P4               0x6C0E // #689d6a dark muted aqua

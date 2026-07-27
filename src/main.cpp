@@ -93,8 +93,10 @@ void loop()
   int x, y;
   if (readTap(x, y))
   {
-    tone(BUZZER, BUZZER_FREQ, BUZZER_T);
-    ui_handle_tap(x, y, current_state);
+    bool pressed = ui_handle_tap(x, y, current_state);
+    if(pressed){
+      tone(BUZZER, BUZZER_FREQ, BUZZER_T);
+    }
     delay(50);
   }
 

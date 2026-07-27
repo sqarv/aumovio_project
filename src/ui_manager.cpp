@@ -4,10 +4,10 @@
 //-------------------------------- MAIN LAYOUT (240x320)
 
 const rect SLOTS[4] = {
-    {15, 30, 105, 100, 8, -6, 2, 5, UI_COLOR_P1, UI_COLOR_P1, UI_COLOR_P1, false, "P1"},
-    {130, 30, 105, 100, 8, -6, 2, 5, UI_COLOR_P2, UI_COLOR_P2, UI_COLOR_P2, false, "P2"},
-    {15, 148, 105, 100, 8, -6, 2, 5, UI_COLOR_P3, UI_COLOR_P3, UI_COLOR_P3, false, "P3"},
-    {130, 148, 105, 100, 8, -6, 2, 5, UI_COLOR_P4, UI_COLOR_P4, UI_COLOR_P4, false, "P4"}
+    {10, 35, 105, 100, 8, -6, 2, 5, UI_COLOR_P1, UI_COLOR_P1, UI_COLOR_P1, false, "P1"},
+    {130, 35, 105, 100, 8, -6, 2, 5, UI_COLOR_P2, UI_COLOR_P2, UI_COLOR_P2, false, "P2"},
+    {10, 150, 105, 100, 8, -6, 2, 5, UI_COLOR_P3, UI_COLOR_P3, UI_COLOR_P3, false, "P3"},
+    {130, 150, 105, 100, 8, -6, 2, 5, UI_COLOR_P4, UI_COLOR_P4, UI_COLOR_P4, false, "P4"}
 };
 const uint8_t SLOT_TO_PRESET[4] = {0, 1, 2, 3};
 
@@ -18,7 +18,7 @@ const rect MAIN_BUTTONS[] = {
 };
 
 const ui_label MAIN_LABELS[] = {
-    {10, 6, 2, UI_COLOR_FG, "PUMP CONTROL"}
+    {40, 6, 2, UI_COLOR_FG, "MAIN DASHBOARD"}
 };
 const uint8_t MAIN_LABEL_COUNT = sizeof(MAIN_LABELS) / sizeof(MAIN_LABELS[0]);
 
@@ -33,15 +33,15 @@ const rect FIELD_RECT[FLD_COUNT] = {
     {10, 104, 64, 32, 0, 0, 2, 6, UI_COLOR_P2, UI_COLOR_P2, UI_COLOR_FG, false, ""},
     {88, 104, 64, 32, 0, 0, 2, 6, UI_COLOR_P2, UI_COLOR_P2, UI_COLOR_FG, false, ""},
     {166, 104, 64, 32, 0, 0, 2, 6, UI_COLOR_P2, UI_COLOR_P2, UI_COLOR_FG, false, ""},
-    {60, 162, 120, 32, 0, 0, 2, 6, UI_COLOR_WARN, UI_COLOR_WARN, UI_COLOR_FG, false, ""}
+    {60, 162, 120, 32, 0, 0, 2, 6, UI_COLOR_FG, UI_COLOR_FG, UI_COLOR_FG, false, ""}
 };
 
 const rect EDIT_BUTTONS[] = {
-    {30, 202, 75, 42, 30, 13, 2, 6, UI_COLOR_FG, UI_COLOR_FG, UI_COLOR_BG, false, "-"},
-    {135, 202, 75, 42, 30, 13, 2, 6, UI_COLOR_FG, UI_COLOR_FG, UI_COLOR_BG, false, "+"},
-    {5, 256, 70, 55, 6, 20, 2, 6, UI_COLOR_ACTIVE, UI_COLOR_ACTIVE_BORDER, UI_COLOR_FG, true, "<BACK"},
+    {30,  202, 75, 42, 30, 13, 2, 6, UI_COLOR_FG, UI_COLOR_FG, UI_COLOR_FG, false, "-"},
+{135, 202, 75, 42, 30, 13, 2, 6, UI_COLOR_FG, UI_COLOR_FG, UI_COLOR_FG, false, "+"},
+    {5, 256, 70, 55, 6, 20, 2, 6, UI_COLOR_NEUTRAL, UI_COLOR_NEUTRAL_BORDER, UI_COLOR_FG, true, "<BACK"},
     {85, 256, 70, 55, 11, 20, 2, 6, UI_COLOR_WARN, UI_COLOR_WARN_BORDER, UI_COLOR_FG, true, "MAIN"},
-    {165, 256, 70, 55, 6, 20, 2, 6, UI_COLOR_ACTIVE, UI_COLOR_ACTIVE_BORDER, UI_COLOR_FG, true, "NEXT>"}
+    {165, 256, 70, 55, 6, 20, 2, 6, UI_COLOR_NEUTRAL, UI_COLOR_NEUTRAL_BORDER, UI_COLOR_FG, true, "NEXT>"}
 };
 
 const ui_label EDIT_LABELS[] = {
@@ -304,7 +304,7 @@ void ui_tick(system_state state)
   draw_main_dynamic(state);
 }
 
-void ui_handle_tap(int x, int y, system_state &state)
+bool ui_handle_tap(int x, int y, system_state &state)
 {
   if (screen_state == SCR_MAIN) // check only main screen buttons
   {
@@ -339,7 +339,7 @@ void ui_handle_tap(int x, int y, system_state &state)
             break;
         }
         draw_main_dynamic(state);
-        return;
+        return true;
       }
     }
 
@@ -355,7 +355,7 @@ void ui_handle_tap(int x, int y, system_state &state)
         clear_main_screen();
         draw_edit_static(editing_preset);
         draw_edit_dynamic(s_presets[editing_preset]);
-        return;
+        return true;
       }
     }
   } 
@@ -370,7 +370,7 @@ void ui_handle_tap(int x, int y, system_state &state)
       {
         selected_field = (edit_field)f;
         draw_edit_dynamic(pr);
-        return;
+        return true;
       }
     }
 
@@ -412,10 +412,12 @@ void ui_handle_tap(int x, int y, system_state &state)
             draw_main_dynamic(state);
             break;
         }
-        return;
+        return true;
       }
     }
   }
+
+  return false;
 }
 
 //--------------------------------
