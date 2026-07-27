@@ -8,8 +8,8 @@
 #define UI_COLOR_ACTIVE           0x4B23 // #496418 darker rich green
 #define UI_COLOR_ACTIVE_BORDER    0x29C1 // #2d3f0c deep forest green border
 
-#define UI_COLOR_INACTIVE         0xA183 // #a02820 refined dark red
-#define UI_COLOR_INACTIVE_BORDER  0x6801 // #68120c matching deep border
+#define UI_COLOR_INACTIVE         0x9983 // #9b2e25 darker gruvbox red
+#define UI_COLOR_INACTIVE_BORDER  0x6001 // #631913 deep crimson border
 
 #define UI_COLOR_WARN             0x9260 // #935300 darker warm orange
 #define UI_COLOR_WARN_BORDER      0x51A0 // #532c00 deep amber border

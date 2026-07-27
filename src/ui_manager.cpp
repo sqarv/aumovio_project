@@ -345,7 +345,6 @@ void ui_handle_tap(int x, int y, system_state &state)
             break;
         }
         draw_main_dynamic(state);
-        return true;
       }
     }
 
@@ -361,7 +360,7 @@ void ui_handle_tap(int x, int y, system_state &state)
         clear_main_screen();
         draw_edit_static(editing_preset);
         draw_edit_dynamic(s_presets[editing_preset]);
-        return true;
+        return;
       }
     }
   } 
@@ -376,7 +375,7 @@ void ui_handle_tap(int x, int y, system_state &state)
       {
         selected_field = (edit_field)f;
         draw_edit_dynamic(pr);
-        return true;
+        return;
       }
     }
 
@@ -418,12 +417,12 @@ void ui_handle_tap(int x, int y, system_state &state)
             draw_main_dynamic(state);
             break;
         }
-        return true;
+        return;
       }
     }
   }
 
-  return false;
+  return;
 }
 
 //--------------------------------
