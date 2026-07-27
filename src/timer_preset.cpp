@@ -1,5 +1,14 @@
 #include "timer_preset.hpp"
 
+//-------------------------------- HELPER FUNCTIONS
+
+static uint8_t wrap_add(uint8_t val, int8_t delta, uint8_t maxVal) { // used for H , M ... values . ex:  99 <- 0 ... 99 -> 0
+  int16_t v = (int16_t)val + delta;
+  if (v < 0) v = (int16_t)maxVal;
+  if (v > (int16_t)maxVal) v = 0;
+  return (uint8_t)v;
+}
+
 //-------------------------------- FUNCTION DEFINITIONS
 
 uint32_t HMS_to_millis(const time_HMS &t) {
@@ -73,13 +82,6 @@ uint32_t preset_time_left(const timer_preset &pr, uint32_t now, system_state sta
   return pr.state_duration_ms - elapsed;
 }
 
-static uint8_t wrap_add(uint8_t val, int8_t delta, uint8_t maxVal) { // used for H , M ... values . ex:  99 <- 0 ... 99 -> 0
-  int16_t v = (int16_t)val + delta;
-  if (v < 0) v = (int16_t)maxVal;
-  if (v > (int16_t)maxVal) v = 0;
-  return (uint8_t)v;
-}
-
 void adjust_preset_field(timer_preset &pr, edit_field field, int8_t delta){
   switch (field) {
     case FLD_TON_H:  pr.ton.h  = wrap_add(pr.ton.h,  delta, MAX_H); break;
@@ -92,3 +94,5 @@ void adjust_preset_field(timer_preset &pr, edit_field field, int8_t delta){
     default: break;
   }
 }
+
+//--------------------------------

@@ -3,9 +3,21 @@
 #include "timer_preset.hpp"
 #include "config.hpp"
 
-enum Screen : uint8_t { SCR_MAIN = 0, SCR_EDIT = 1 };
+//-------------------------------- DATA STRUCTURES DEFINITIONS
 
-void uiInit(Adafruit_ST7789 *tftPtr, TimerChannel *channelsPtr);
-void uiDrawMain(SystemState state);       // desenare completa MAIN (o singura data, la boot/revenire)
-void uiHandleTap(int x, int y, SystemState &state); // rutare tap catre ecranul curent
-void uiTick(SystemState state);           // refresh periodic al numaratorii (doar pe MAIN)
+struct rect {
+    int8_t x, y, w, h, text_ox, text_oy;
+    uint16_t color,text_color;
+    char text[10];
+};
+
+enum screen : uint8_t { SCR_MAIN = 0, SCR_EDIT = 1 };
+
+//-------------------------------- FUNCTION DECLARATIONS
+
+void ui_init(Adafruit_ST7789 *tftPtr, timer_preset *presetsPtr);
+void ui_draw_main(system_state state);      // draw MAIN screen
+void ui_handle_tap(int x, int y, system_state &state); // tap route to the current screen
+void ui_tick(system_state state);
+
+//--------------------------------
