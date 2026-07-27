@@ -29,11 +29,30 @@ void set_relay(const timer_preset &pr, bool state)
 
 void preset_on(timer_preset &pr)
 {
+  pr.cycles_done = 0;
+  pr.finished = false;
+
+  if (HMS_to_millis(pr.ton) == 0 && HMS_to_millis(pr.toff) == 0)
+  {
+    pr.state = RELAY_OFF;
+    pr.state_start_ms = millis();
+    pr.state_duration_ms = 0;
+    set_relay(pr, false);
+    return;
+  }
+
+  if (HMS_to_millis(pr.ton) == 0)
+  {
+    pr.state = RELAY_OFF;
+    pr.state_start_ms = millis();
+    pr.state_duration_ms = HMS_to_millis(pr.toff);
+    set_relay(pr, false);
+    return;
+  }
+
   pr.state = RELAY_ON;
   pr.state_start_ms = millis();
   pr.state_duration_ms = HMS_to_millis(pr.ton);
-  pr.cycles_done = 0;
-  pr.finished = false;
   set_relay(pr, true);
 }
 
@@ -54,10 +73,22 @@ void preset_update(timer_preset &pr, system_state state, uint32_t now)
   if (elapsed < pr.state_duration_ms)
     return; // relay in the same state
 
-  // current relay state ended logic
+    // current relay state ended logic
 
   if (pr.state == RELAY_ON)
   { // RELAY_ON state (TON) ended
+
+    // TON = 0 and TOFF = 0 -> do nothing
+    if (pr.state_duration_ms == 0 && HMS_to_millis(pr.toff) == 0)
+      return;
+
+    // TOFF = 0 -> stay ON
+    if (HMS_to_millis(pr.toff) == 0)
+    {
+      pr.state_start_ms = now;
+      return;
+    }
+
     pr.state = RELAY_OFF;
     pr.state_duration_ms = HMS_to_millis(pr.toff);
     pr.state_start_ms = now;
@@ -65,6 +96,14 @@ void preset_update(timer_preset &pr, system_state state, uint32_t now)
   }
   else
   { // RELAY_OFF state (TOFF) ended -> 1 cycle finished
+
+    // TON = 0 -> stay OFF
+    if (HMS_to_millis(pr.ton) == 0)
+    {
+      pr.state_start_ms = now;
+      return;
+    }
+
     pr.cycles_done++;
 
     if (pr.cycles != 0 && pr.cycles_done >= pr.cycles)
