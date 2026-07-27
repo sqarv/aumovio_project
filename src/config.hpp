@@ -20,13 +20,13 @@ static const uint8_t RELAY_PINS[4] = {2, 3, 4, 5};
 // display settings
 #define SCREEN_W 240
 #define SCREEN_H 320
-#define DYNAMIC_REFRESH_TIME 1000
+#define DYNAMIC_REFRESH_TIME 100
 
 // edit limits
-#define MAX_H 99
+#define MAX_H 999
 #define MAX_M 59
 #define MAX_S 59
-#define MAX_CYCLES 9999
+#define MAX_CYCLES 50000
 
 #define BUZZER_FREQ 500
 #define BUZZER_T 50

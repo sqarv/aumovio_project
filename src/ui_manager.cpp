@@ -38,8 +38,8 @@ const rect EDIT_BUTTONS[] = {
     {165, 270, 70, 40, 10, 14, ST77XX_CYAN, ST77XX_CYAN, "NEXT>"},   // BTN_NEXT
 };
 
-enum MainBtnIdx { BTN_START_IDX = 0, BTN_STOP_IDX, BTN_FREEZE_IDX };
-enum EditBtnIdx { BTN_MINUS_IDX = 0, BTN_PLUS_IDX, BTN_BACK_IDX, BTN_MAIN_IDX, BTN_NEXT_IDX };
+enum MainBtnIdx { BTN_START_IDX = 0, BTN_STOP_IDX, BTN_FREEZE_IDX , MAIN_BTN_COUNT};
+enum EditBtnIdx { BTN_MINUS_IDX = 0, BTN_PLUS_IDX, BTN_BACK_IDX, BTN_MAIN_IDX, BTN_NEXT_IDX , EDIT_BTN_COUNT};
 
 //-------------------------------- INTERTAN STATE
 static Adafruit_ST7789 *s_tft = nullptr;
@@ -155,7 +155,7 @@ void draw_edit_static(uint8_t idx)
     draw_rect(FIELD_RECT[f]);
   }
 
-  for (uint8_t btn = 0; btn < 3; btn++)
+  for (uint8_t btn = 0; btn < EDIT_BTN_COUNT; btn++)
   { // draw control buttons
     draw_rect(EDIT_BUTTONS[btn]);
   }
@@ -164,7 +164,7 @@ void draw_edit_static(uint8_t idx)
 void draw_edit_dynamic(timer_preset &pr)
 {
   static edit_field last_selected = (edit_field)-1;
-  char buf[6];
+  char buf[7];
 
   s_tft->setTextSize(2);
   s_tft->setTextColor(ST77XX_WHITE, ST77XX_BLACK); // overwrite text background directly
@@ -184,7 +184,7 @@ void draw_edit_dynamic(timer_preset &pr)
     switch (f)
     {
     case FLD_TON_H:
-      snprintf(buf, sizeof(buf), "%02u", pr.ton.h);
+      snprintf(buf, sizeof(buf), "%03u", pr.ton.h);
       break;
     case FLD_TON_M:
       snprintf(buf, sizeof(buf), "%02u", pr.ton.m);
@@ -193,7 +193,7 @@ void draw_edit_dynamic(timer_preset &pr)
       snprintf(buf, sizeof(buf), "%02u", pr.ton.s);
       break;
     case FLD_TOFF_H:
-      snprintf(buf, sizeof(buf), "%02u", pr.toff.h);
+      snprintf(buf, sizeof(buf), "%03u", pr.toff.h);
       break;
     case FLD_TOFF_M:
       snprintf(buf, sizeof(buf), "%02u", pr.toff.m);
@@ -202,7 +202,7 @@ void draw_edit_dynamic(timer_preset &pr)
       snprintf(buf, sizeof(buf), "%02u", pr.toff.s);
       break;
     case FLD_CYCLES:
-      snprintf(buf, sizeof(buf), "%3u", pr.cycles);
+      snprintf(buf, sizeof(buf), "%5u", pr.cycles);
       break;
     default:
       buf[0] = '\0';
@@ -312,7 +312,7 @@ void ui_handle_tap(int x, int y, system_state &state)
     }
 
     // 2. check edit control buttons (+, -, BACK, MAIN, NEXT)
-    for (uint8_t i = 0; i < sizeof(EDIT_BUTTONS) / sizeof(EDIT_BUTTONS[0]); i++) 
+    for (uint8_t i = 0; i < EDIT_BTN_COUNT; i++) 
     {
       if (hit_rect(EDIT_BUTTONS[i], x, y)) 
       {

@@ -6,7 +6,7 @@
 
 struct time_HMS
 {
-  uint8_t h;
+  uint16_t h;
   uint8_t m;
   uint8_t s;
 };
@@ -52,8 +52,8 @@ struct timer_preset
 uint32_t HMS_to_millis(const time_HMS &t);
 void set_relay(const timer_preset &pr, bool state);
 
-void preset_on(timer_preset &pr);                                        // START: (re)porneste canalul din TON
-void preset_off(timer_preset &pr);                                       // STOP: opreste + reseteaza releul pe OFF
+void preset_on(timer_preset &pr);
+void preset_off(timer_preset &pr);
 void preset_update(timer_preset &pr, system_state state, uint32_t now);  // update preset timer
 void preset_shift_freeze(timer_preset &pr, uint32_t paused_duration_ms); // shift state_start time by freeze duration
 uint32_t preset_time_left(const timer_preset &pr, uint32_t now, system_state state);

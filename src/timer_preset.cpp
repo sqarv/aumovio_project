@@ -2,14 +2,17 @@
 
 //-------------------------------- HELPER FUNCTIONS
 
-static uint8_t wrap_add(uint8_t val, int8_t delta, uint8_t maxVal)
-{ // used for H , M ... values . e.g.:  99 <- 0 ... 99 -> 0
-  int16_t v = (int16_t)val + delta;
-  if (v < 0)
-    v = (int16_t)maxVal;
-  if (v > (int16_t)maxVal)
-    v = 0;
-  return (uint8_t)v;
+static uint16_t wrap_add(uint16_t val, int8_t delta, uint16_t maxVal)
+{ // Handles 0..maxVal wrapping correctly (e.g. 0-1 -> maxVal, maxVal+1 -> 0)
+  int32_t v = (int32_t)val + delta;
+  
+  if (v < 0) {
+    return maxVal;
+  }
+  if (v > maxVal) {
+    return 0;
+  }
+  return (uint16_t)v;
 }
 
 //-------------------------------- FUNCTION DEFINITIONS
