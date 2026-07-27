@@ -5,23 +5,25 @@
 #include <string.h>
 
 #include "config.hpp"
-#include "timer_channel.hpp"
+#include "timer_preset.hpp"
 #include "ui_manager.hpp"
 
-// INIT
+//-------------------------------- INIT
+
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST); // display object
 XPT2046_Touchscreen ts(T_CS); // touch object
 
-TimerChannel presets[4] = {
-  { "Custom 1", RELAY_PINS[0], {0,0,5}, {0,0,5}, 3, PH_ON, 0, 0, 0, false },
-  { "Custom 2", RELAY_PINS[1], {0,0,5}, {0,0,5}, 3, PH_ON, 0, 0, 0, false },
-  { "Custom 3", RELAY_PINS[2], {0,0,5}, {0,0,5}, 3, PH_ON, 0, 0, 0, false },
-  { "Custom 4", RELAY_PINS[3], {0,0,5}, {0,0,5}, 3, PH_ON, 0, 0, 0, false },
+timer_preset presets[4] = {
+  { "Custom 1", RELAY_PINS[0], {0,0,5}, {0,0,5}, 3, RELAY_OFF, 0, 0, 0, false },
+  { "Custom 2", RELAY_PINS[1], {0,0,5}, {0,0,5}, 3, RELAY_OFF, 0, 0, 0, false },
+  { "Custom 3", RELAY_PINS[2], {0,0,5}, {0,0,5}, 3, RELAY_OFF, 0, 0, 0, false },
+  { "Custom 4", RELAY_PINS[3], {0,0,5}, {0,0,5}, 3, RELAY_OFF, 0, 0, 0, false },
 };
 
-SystemState systemState = SYS_IDLE;
+system_state current_state = SYS_IDLE;
 
-// FUNCTIONS
+//-------------------------------- HELPER FUNCTIONS
+
 bool readTap(int &x, int &y) {
   if (!ts.touched()) return false;
   TS_Point p = ts.getPoint();
@@ -40,20 +42,21 @@ bool readTap(int &x, int &y) {
   return true;
 }
 
-// SETUP
+//-------------------------------- SETUP
+
 void setup() {
   Serial.begin(9600);
   
-  // set relays
+  // set relays to off
   for (uint8_t i = 0; i < 4; i++) {
-    pinMode(presets[i].relayPin, OUTPUT);
-    digitalWrite(presets[i].relayPin, LOW);
+    pinMode(presets[i].pin, OUTPUT);
+    digitalWrite(presets[i].pin, LOW);
   }
   
   // init display
   tft.init(SCREEN_W,SCREEN_H);
   tft.invertDisplay(0); // non-inverted colors
-  tft.setRotation(0); // portrait
+  tft.setRotation(0); // portrait orientationn
   
   // init touch
   ts.begin();
@@ -61,27 +64,32 @@ void setup() {
   
   // other
   uiInit(&tft, presets);
-  uiDrawMain(systemState);
+  uiDrawMain(current_state);
   
   //set buzzer
   pinMode(BUZZER,OUTPUT);
   digitalWrite(BUZZER,LOW);
 }
 
-// LOOP
+//-------------------------------- LOOP
+
 void loop() {
   uint32_t now = millis();
-
+  
+  // update presets
   for (uint8_t i = 0; i < 4; i++) {
-    channelUpdate(presets[i], systemState, now);
+    preset_update(presets[i], current_state, now);
   }
-
+  
+  // touch detection
   int x, y;
   if (readTap(x, y)) {
     tone(BUZZER,BUZZER_FREQ,BUZZER_T);
-    uiHandleTap(x, y, systemState);
+    uiHandleTap(x, y, current_state);
     delay(50);
   }
 
-  uiTick(systemState);
+  uiTick(current_state);
 }
+
+//--------------------------------

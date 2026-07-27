@@ -1,6 +1,6 @@
 #pragma once
 #include <Adafruit_ST7789.h>
-#include "timer_channel.hpp"
+#include "timer_preset.hpp"
 #include "config.hpp"
 
 enum Screen : uint8_t { SCR_MAIN = 0, SCR_EDIT = 1 };

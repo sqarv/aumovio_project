@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 
-// PINS
+//-------------------------------- PINS
 
 // display pins
 #define TFT_CS     10
@@ -15,7 +15,7 @@ static const uint8_t RELAY_PINS[4] = {2, 3, 4, 5};
 // other pins
 #define BUZZER 6
 
-// SETTINGS
+//-------------------------------- SETTINGS
 
 // display settings
 #define SCREEN_W 240
@@ -25,12 +25,13 @@ static const uint8_t RELAY_PINS[4] = {2, 3, 4, 5};
 #define MAX_H 99
 #define MAX_M 59
 #define MAX_S 59
-#define MAX_CYCLES 999
+#define MAX_CYCLES 9999
 
 #define BUZZER_FREQ 500
 #define BUZZER_T 50
 
-// STATES
+//-------------------------------- STATES
 
-// systems states
-enum SystemState : uint8_t { SYS_IDLE = 0, SYS_RUNNING = 1, SYS_FROZEN = 2 };
+enum system_state : uint8_t { SYS_IDLE = 0, SYS_RUNNING = 1, SYS_FROZEN = 2 };
+
+//-------------------------------- 
