@@ -15,10 +15,10 @@ Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST); // display objec
 XPT2046_Touchscreen ts(T_CS);                                   // touch object
 
 timer_preset presets[4] = {
-    {"Custom 1", RELAY_PINS[0], {0, 0, 5}, {0, 0, 5}, 3, RELAY_OFF, 0, 0, 0, false},
-    {"Custom 2", RELAY_PINS[1], {0, 0, 5}, {0, 0, 5}, 3, RELAY_OFF, 0, 0, 0, false},
-    {"Custom 3", RELAY_PINS[2], {0, 0, 5}, {0, 0, 5}, 3, RELAY_OFF, 0, 0, 0, false},
-    {"Custom 4", RELAY_PINS[3], {0, 0, 5}, {0, 0, 5}, 3, RELAY_OFF, 0, 0, 0, false},
+    {"Custom 1", RELAY_PINS[0], {0, 0, 0}, {0, 0, 0}, 0, RELAY_OFF, 0, 0, 0, false},
+    {"Custom 2", RELAY_PINS[1], {0, 0, 0}, {0, 0, 0}, 0, RELAY_OFF, 0, 0, 0, false},
+    {"Custom 3", RELAY_PINS[2], {0, 0, 0}, {0, 0, 0}, 0, RELAY_OFF, 0, 0, 0, false},
+    {"Custom 4", RELAY_PINS[3], {0, 0, 0}, {0, 0, 0}, 0, RELAY_OFF, 0, 0, 0, false},
 };
 
 system_state current_state = SYS_IDLE;
