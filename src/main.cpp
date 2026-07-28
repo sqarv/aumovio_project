@@ -45,6 +45,44 @@ bool readTap(int &x, int &y)
   return true;
 }
 
+// Timing parameters
+const uint16_t BASE_SPEED = 250;  // Initial step delay (ms)
+const uint16_t MIN_SPEED  = 10;   // Fastest step delay when held (ms)
+const uint16_t ACCEL_STEP = 10;   // How fast it accelerates per tick (ms)
+
+uint32_t last_action_time = 0;
+uint16_t current_delay = BASE_SPEED;
+bool touch_state = false;
+
+void handle_touch(int x, int y, uint32_t now) {
+  bool touching = readTap(x, y);
+
+  if (touching) {
+    // 1. First touch: Trigger immediately and reset acceleration
+    if (!touch_state) {
+      touch_state = true;
+      current_delay = BASE_SPEED;
+      last_action_time = now;
+      ui_handle_tap(x, y, current_state);
+    } 
+    // 2. Held down: Trigger repeatedly with decreasing delay
+    else if (now - last_action_time >= current_delay) {
+      last_action_time = now;
+      ui_handle_tap(x, y, current_state);
+
+      // Accelerate (decrease delay down to MIN_SPEED)
+      if (current_delay > MIN_SPEED + ACCEL_STEP) {
+        current_delay -= ACCEL_STEP;
+      } else {
+        current_delay = MIN_SPEED;
+      }
+    }
+  } else {
+    // Touch released: Reset state
+    touch_state = false;
+  }
+}
+
 //-------------------------------- SETUP
 
 void setup()
@@ -90,13 +128,11 @@ void loop()
   }
 
   // touch detection
-  int x, y;
-  if (readTap(x, y))
-  {
-    ui_handle_tap(x, y, current_state);
-    delay(50);
-  }
-
+  
+  int x,y;
+  handle_touch(x,y,now);
+  
+  // update ui
   ui_tick(current_state);
 }
 

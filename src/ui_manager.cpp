@@ -189,7 +189,7 @@ void draw_main_dynamic(system_state state)
     const rect &r = SLOTS[slot];
 
     // Status indicator circle
-    bool relay_on = (state == SYS_RUNNING && pr.state == RELAY_ON && !pr.finished);
+    bool relay_on = (pr.state == RELAY_ON && !pr.finished);
     s_tft->fillCircle(r.x + r.w - 14, r.y + 16, 6, relay_on ? UI_COLOR_ACTIVE : UI_COLOR_INACTIVE);
 
     // Remaining time (font size 2)

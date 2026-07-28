@@ -20,7 +20,7 @@ static const uint8_t RELAY_PINS[4] = {2, 3, 4, 5};
 // display settings
 #define SCREEN_W 240
 #define SCREEN_H 320
-#define DYNAMIC_REFRESH_TIME 100
+#define DYNAMIC_REFRESH_TIME 10
 
 // edit limits
 #define MAX_H 999
