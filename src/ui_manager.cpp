@@ -12,9 +12,9 @@ const rect SLOTS[4] = {
 const uint8_t SLOT_TO_PRESET[4] = {0, 1, 2, 3};
 
 const rect MAIN_BUTTONS[] = {
-    {8, 265, 72, 50, 6, 17, 2, 6, UI_COLOR_ACTIVE, UI_COLOR_ACTIVE_BORDER, UI_COLOR_FG, true, "START"},
-    {86, 265, 68, 50, 8, 17, 2, 6, UI_COLOR_INACTIVE, UI_COLOR_INACTIVE_BORDER, UI_COLOR_FG, true, "STOP"},
-    {160, 265, 72, 50, 6, 17, 2, 6, UI_COLOR_WARN, UI_COLOR_WARN_BORDER, UI_COLOR_FG, true, "PAUSE"}
+    {8, 265, 72, 50, 6, 17, 2, 6, UI_COLOR_NEUTRAL, UI_COLOR_NEUTRAL_BORDER, UI_COLOR_FG, true, "START"},
+    {86, 265, 68, 50, 8, 17, 2, 6, UI_COLOR_NEUTRAL, UI_COLOR_NEUTRAL_BORDER, UI_COLOR_FG, true, "STOP"},
+    {160, 265, 72, 50, 6, 17, 2, 6, UI_COLOR_NEUTRAL, UI_COLOR_NEUTRAL_BORDER, UI_COLOR_FG, true, "PAUSE"}
 };
 
 const ui_label MAIN_LABELS[] = {
@@ -47,7 +47,7 @@ const rect EDIT_BUTTONS[] = {
 const ui_label EDIT_LABELS[] = {
     {10, 26, 2, UI_COLOR_FG, "TON (H:M:S)"},
     {10, 84, 2, UI_COLOR_FG, "TOFF (H:M:S)"},
-    {30, 142, 2, UI_COLOR_FG, "Cicluri (0=inf)"}
+    {30, 142, 2, UI_COLOR_FG, "Cycles (0=inf)"}
 };
 const uint8_t EDIT_LABEL_COUNT = sizeof(EDIT_LABELS) / sizeof(EDIT_LABELS[0]);
 
@@ -208,7 +208,7 @@ void draw_main_dynamic(system_state state)
     if (state == SYS_IDLE)
       s_tft->print("IDLE  ");
     else if (state == SYS_FROZEN)
-      s_tft->print("FREEZE");
+      s_tft->print("PAUSED");
     else if (pr.finished)
       s_tft->print("DONE  ");
     else
